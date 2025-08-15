@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Festivals Calendar With Business Promotion ..</title>
+  
+
+</head>
+<style>
+  
+    *{box-sizing:border-box}
+    :root{
+      --brand:#6a8bff;
+      --dark:#0f172a;
+      --muted:#64748b;
+      --card:#ffffff;
+      --line:#e5e7eb;
+      --ok:#16a34a;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+    }
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;color:#1f2937;background:#f6f8ff}
+    .hidden{display:none}
+    .small{font-size:12px}
+    .muted{color:#64748b}
+
+   
+    header.cool{
+      position:sticky;top:0;z-index:20;
+      background:#ffffff;border-bottom:1px solid var(--line);
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:10px 16px
+    }
+    .brand{font-weight:800;color:var(--dark)}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav-btn{
+      padding:8px 12px;border:1px solid var(--line);background:#fff;border-radius:8px;cursor:pointer
+    }
+    .nav-btn.active{border-color:var(--brand);color:#1e40af}
+    .area{display:flex;align-items:center;gap:8px}
+    #log.small{padding:6px 10px;border:1px solid var(--line);background:#fff;border-radius:8px;cursor:pointer}
+
+ 
+    .main{min-height:calc(100vh - 56px)}
+    .section{padding:28px 16px}
+    .inner{max-width:1100px;margin:0 auto}
+    .narrow{max-width:900px}
+
+    #home{background:linear-gradient(135deg,#eef2ff,#f5f7ff)}
+    #calendar{background:linear-gradient(135deg,#f0fdf4,#ecfeff)}
+    #promotion{background:linear-gradient(135deg,#fff7ed,#fef2f2)}
+    #contact{background:linear-gradient(135deg,#f8fafc,#eef2ff)}
+    #dashboard{background:linear-gradient(135deg,#f1f5f9,#f0fdfa)}
+
+    .lead{color:var(--muted)}
+    .homeactions{display:flex;gap:10px;margin-top:10px}
+    .homeactions button{padding:10px 14px;border:0;border-radius:10px;background:var(--brand);color:#fff;cursor:pointer}
+    .calendarpromo{background:#0ea5e9}
+
+ 
+    .ads-wrap{margin-top:16px;border:1px solid var(--line);background:#fff;border-radius:12px;overflow:hidden}
+    .ads-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--line)}
+    .ads-body{position:relative;height:200px}
+    .ads-body a{display:block;width:auto;height:auto}
+    .ads-body img{width:auto;height:auto;object-fit:cover}
+    .ads-ctrl{display:flex;gap:8px}
+    .ads-ctrl button{padding:6px 10px;border:1px solid var(--line);background:#fff;border-radius:8px;cursor:pointer}
+
+    .toprow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+    .control{display:flex;align-items:center;gap:8px}
+    #caPrev,#calnext{padding:6px 10px;border:1px solid var(--line);background:#fff;border-radius:8px;cursor:pointer}
+    .monthLabel{font-weight:700}
+    .weekend{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;color:#475569}
+    .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:8px}
+    .cell{
+      min-height:86px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px;position:relative;cursor:pointer
+    }
+    .cell .d{font-weight:700}
+    .cell.today{outline:2px solid var(--brand)}
+    .tag{display:inline-block;margin-top:6px;padding:2px 6px;border-radius:999px;font-size:11px;background:#fee2e2;color:#7f1d1d}
+    .dot{width:6px;height:6px;background:#ef4444;border-radius:999px;position:absolute;top:8px;right:8px}
+    .miniform{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .miniform input{flex:1;min-width:180px;padding:10px;border:1px solid #cbd5e1;border-radius:8px}
+    .calbottom{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:800px){ .calbottom{grid-template-columns:1fr} }
+    .list{list-style:none;margin:0;padding:0}
+    .list li{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;margin:6px 0;display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .list .actions{display:flex;gap:6px}
+    .editBtn{border:1px solid #cbd5e1;background:#f8fafc;border-radius:8px;padding:6px 8px;cursor:pointer}
+    .delBtn{border:1px solid #fecaca;background:#fff5f5;color:#991b1b;border-radius:8px;padding:6px 8px;cursor:pointer}
+    .search{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;margin-top:10px}
+
+    
+    .top-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+    .prormo1 input,.prormo1 textarea{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;margin:6px 0}
+    #promoList{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:10px}
+    .pCard{background:#0f172a;color:#e2e8f0;border-radius:14px;padding:14px;border:1px solid #111827}
+    .pHead{display:flex;justify-content:space-between;align-items:center}
+    .badge{padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700}
+    .live .badge{background:#22c55e;color:#052e12}
+    .upcoming .badge{background:#f59e0b;color:#3a2500}
+    .expired .badge{background:#ef4444;color:#3a0d0d}
+    .pOff{font-size:22px;font-weight:800}
+    .pDates{color:#93c5fd;margin:4px 0 8px}
+    .pCode{display:flex;align-items:center;gap:6px;margin:8px 0}
+    .copy{padding:6px 8px;border:1px solid #475569;border-radius:8px;background:#111827;color:#e5e7eb;cursor:pointer}
+    .pDesc{color:#cbd5e1}
+    .pActions{display:flex;gap:8px;margin-top:10px}
+    .searchRow{display:flex;gap:8px;flex-wrap:wrap}
+    #coupon.small{padding:8px 10px;border:1px solid var(--line);background:#fff;border-radius:8px;cursor:pointer}
+    #clearPromo{margin-left:6px}
+
+    .db-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .db_cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+    .db-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
+    .db-title{color:var(--muted)}
+    .db-value{font-size:24px;font-weight:800}
+
+ 
+    .site-footer{padding:14px;text-align:center;border-top:1px solid var(--line);background:#fff}
+  
+</style>
+<body>
+
+
+  <header class="cool">
+    <div class="brand">MyFest & Promo</div>
+    <nav class="nav">
+      <button data-target="home" class="nav-btn active">Home</button>
+      <button data-target="calendar" class="nav-btn">Calendar</button>
+      <button data-target="promotion" class="nav-btn">Promotions</button>
+      <button data-target="contact" class="nav-btn">Contact</button>
+      <button data-target="dashboard" class="nav-btn">Dashboard</button>
+    </nav>
+    <div class="area">
+      <span id="user">Guest</span>
+      <button id="log" class="small">Login</button>
+    </div>
+  </header>
+
+  <div id="hidd" class="hidden">
+    <div class="card">
+      <button class="close" id="closeAuth">✕</button>
+      <h2 id="authtitle">Login</h2>
+      <input id="authuser" placeholder="Username" autocomplete="username"/>
+      <input id="authpass" type="password" placeholder="Password" autocomplete="current-password"/>
+      <div class="row">
+        <button id="authaction" class="primary">Login</button>
+        <button id="authtoggle" class="ghost">Sign Up</button>
+      </div>
+      <div class="row">
+        <button id="skipauth" class="ghost">Continue as Guest</button>
+      </div>
+      <small class="muted">Local demo only (data stays in your browser).</small>
+    </div>
+  </div>
+
+  <main class="main">
+
+    <section id="home" class="section">
+      <div class="inner">
+        <h1>Welcome to MyFest & Promo</h1>
+        <p class="lead">Single page with Festival Calendar (2025–2050 fixed dates), Online Business Promotions, Contact & Dashboard.</p>
+        <div class="homeactions">
+          <button class="calendar" data-target="calendar">Open Calendar</button>
+          <button class="calendarpromo" data-target="promotion">Promotions</button>
+        </div>
+
+        <div class="ads-wrap" id="adsSlider">
+          <div class="ads-head">
+            <strong>Sponsored</strong>
+            <div class="ads-ctrl">
+              <button id="adPrev" class="small">⟨ Prev</button>
+              <button id="adNext" class="small">Next ⟩</button>
+            </div>
+          </div>
+          <div class="ads-body">
+            <a id="adLink" href="#" target="_blank" rel="noopener">
+              <img id="adImg" alt="ad banner"/>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="calendar" class="section section-calendar hidden">
+      <div class="inner narrow">
+        <div class="toprow">
+          <h2>Festival Calendar</h2>
+          <div class="control">
+            <button id="caPrev" class="small">◀</button>
+            <div id="monthYar" class="monthLabel">Month Year</div>
+            <button id="calnext" class="small">▶</button>
+          </div>
+        </div>
+
+        <div class="weekend">
+          <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+        </div>
+        <div id="calgrid" class="grid"></div>
+
+        <input id="festivalSearch" class="search" placeholder="Search festival by name or date (YYYY-MM-DD)…"/>
+
+        <div class="calbottom">
+          <form id="addFestForm" class="miniform">
+            <input id="festname" type="text" placeholder="Festival name (e.g. Diwali)" required/>
+            <input id="festdate" type="date" required/>
+            <button class="primary">Add</button>
+          </form>
+
+          <div class="selectedinfo">
+            <h3 id="seldate">Selected: —</h3>
+            <ul id="selfestivals" class="list"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="promotion" class="section section-promo hidden">
+      <div class="inner narrow">
+        <div class="top-row">
+          <h2>Business Promotions</h2>
+          <div class="searchRow">
+            <button id="coupon" class="small">Generate Code</button>
+            <input id="promoSearch" class="search" placeholder="Search by title/code…"/>
+          </div>
+        </div>
+
+        <form id="promoForm" class="prormo1">
+          <input id="promoTitle" placeholder="Title (e.g. Diwali Sale)" required/>
+          <div class="row">
+            <input id="promoStart" type="date" required/>
+            <input id="promoEnd" type="date" required/>
+          </div>
+          <div class="row">
+            <input id="promoOff" type="number" min="0" max="95" placeholder="Discount %"/>
+            <input id="promoCode" placeholder="Coupon code (or auto-gen)"/>
+          </div>
+          <textarea id="promoDesc" placeholder="Short description (optional)"></textarea>
+          <div class="row">
+            <button type="submit" class="primary">Save Promotion</button>
+            <button type="button" id="clearPromo" class="ghost">Clear</button>
+          </div>
+        </form>
+
+        <div id="promoList"></div>
+      </div>
+    </section>
+
+    <section id="contact" class="section sectioncontact hidden">
+      <div class="inner narrow">
+        <h2>Contact Us</h2>
+        <form id="contactForm" class="prormo1">
+          <div class="row">
+            <input id="cname" placeholder="Your name" required/>
+            <input id="cemail" type="email" placeholder="Email" required/>
+          </div>
+          <input id="csubject" placeholder="Subject" required/>
+          <textarea id="cmessage" placeholder="Message" required minlength="5"></textarea>
+          <button type="submit" class="primary">Send Message</button>
+          <div id="contactMsg" class="muted small" style="margin-top:6px;"></div>
+        </form>
+      </div>
+    </section>
+
+    <section id="dashboard" class="section section-dashboard hidden">
+      <div class="inner narrow">
+        <div class="db-head">
+          <h2>Dashboard</h2>
+          <div>
+            <button id="refreshDash" class="ghost">Refresh</button>
+            <button id="btnLogout" class="ghost">Logout</button>
+          </div>
+        </div>
+
+        <div class="db_cards">
+          <div class="db-card">
+            <div class="db-title">User</div>
+            <div id="dashUser" class="db-value">Guest</div>
+          </div>
+          <div class="db-card">
+            <div class="db-title">Promotions</div>
+            <div id="dashPromoCount" class="db-value">0</div>
+          </div>
+          <div class="db-card">
+            <div class="db-title">Festivals (total)</div>
+            <div id="dashFestCount" class="db-value">0</div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px">
+          <h3>Recent Promotions</h3>
+          <div id="dashPromoList" class="list"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <small>© 2025 MyFest & Promo — Demo project</small>
+  </footer>
+ <script >
+  const $ = (s)=>document.querySelector(s);
+  const $$ = (s)=>document.querySelectorAll(s);
+  const store = {
+    get:(k, d)=> JSON.parse(localStorage.getItem(k) || JSON.stringify(d)),
+    set:(k, v)=> localStorage.setItem(k, JSON.stringify(v))
+  };
+  const todayISO = ()=> new Date().toISOString().slice(0,10);
+
+  function switchTo(id){
+    $$(".section").forEach(s=> s.classList.add("hidden"));
+    $("#"+id).classList.remove("hidden");
+    $$(".nav-btn").forEach(b=> b.classList.remove("active"));
+    $(`.nav-btn[data-target="${id}"]`)?.classList.add("active");
+  }
+  $$(".nav-btn, .homeactions button").forEach(btn=>{
+    btn.addEventListener("click", ()=> switchTo(btn.dataset.target));
+  });
+
+  function openAuth(){ $("#hidd").classList.remove("hidden"); }
+  function closeAuth(){ $("#hidd").classList.add("hidden"); }
+  let mode = "login";
+  function syncAuthUI(){
+    $("#authtitle").textContent = mode==="login" ? "Login" : "Sign Up";
+    $("#authaction").textContent = mode==="login" ? "Login" : "Create Account";
+    $("#authtoggle").textContent = mode==="login" ? "Sign Up" : "Login";
+  }
+  $("#log").addEventListener("click", openAuth);
+  $("#closeAuth").addEventListener("click", closeAuth);
+  $("#skipauth").addEventListener("click", closeAuth);
+  $("#authtoggle").addEventListener("click", ()=>{ mode = (mode==="login"?"signup":"login"); syncAuthUI(); });
+
+  function setUser(name){
+    const userName = name || "Guest";
+    $("#user").textContent = userName;
+    $("#dashUser").textContent = userName;
+    if(userName==="Guest") $("#btnLogout").classList.add("hidden");
+    else $("#btnLogout").classList.remove("hidden");
+  }
+  $("#authaction").addEventListener("click", ()=>{
+    const u = $("#authuser").value.trim();
+    const p = $("#authpass").value;
+    if(!u || !p){ alert("Please fill username & password."); return; }
+    const users = store.get("users", {});
+    if(mode==="signup"){
+      if(users[u]) return alert("User already exists.");
+      users[u] = p; store.set("users", users);
+      alert("Signup done. Now login."); mode="login"; syncAuthUI(); $("#authpass").value="";
+    }else{
+      if(users[u] !== p) return alert("Invalid credentials.");
+      localStorage.setItem("userName", u); setUser(u); closeAuth(); $("#authpass").value="";
+    }
+  });
+  $("#btnLogout").addEventListener("click", ()=>{ localStorage.removeItem("userName"); setUser("Guest"); alert("Logged out."); });
+
+  const ads = [
+    {img:"https://images.unsplash.com/photo-1503602642458-232111445657?w=1200", link:"https://example.com/gadgets"},
+    {img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200", link:"https://example.com/headphones"},
+    {img:"https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=1200", link:"https://example.com/shoes"},
+    {img:"https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=1200", link:"https://example.com/fashion"}
+  ];
+  let adIndex = 0, adTimer = null;
+  function showAd(i){
+    adIndex = (i+ads.length)%ads.length;
+    $("#adImg").src = ads[adIndex].img;
+    $("#adLink").href = ads[adIndex].link;
+  }
+  function startAds(){ adTimer = setInterval(()=> showAd(adIndex+1), 4000); }
+  function stopAds(){ if(adTimer) clearInterval(adTimer); }
+  $("#adPrev").addEventListener("click", ()=>{ stopAds(); showAd(adIndex-1); startAds(); });
+  $("#adNext").addEventListener("click", ()=>{ stopAds(); showAd(adIndex+1); startAds(); });
+
+  const FIXED_FESTS = [
+    ["New Year", "01-01"],
+    ["Makar Sankranti", "01-14"],
+    ["Republic Day", "01-26"],
+    ["Valentine's Day", "02-14"],
+    ["Ambedkar Jayanti", "04-14"],
+    ["Labour Day", "05-01"],
+    ["Independence Day", "08-15"],
+    ["Teacher's Day", "09-05"],
+    ["Engineers' Day", "09-15"],
+    ["Gandhi Jayanti", "10-02"],
+    ["Halloween", "10-31"],
+    ["Children's Day", "11-14"],
+    ["Christmas", "12-25"]
+  ];
+
+  const VARIABLE_2025 = [
+    {name:"Holi", date:"2025-03-14"},
+    {name:"Eid al-Fitr", date:"2025-03-31"},
+    {name:"Raksha Bandhan", date:"2025-08-09"},
+    {name:"Ganesh Chaturthi", date:"2025-08-29"},
+    {name:"Navratri Start", date:"2025-09-29"},
+    {name:"Dussehra", date:"2025-10-02"},
+    {name:"Diwali", date:"2025-10-20"}
+  ];
+
+  function generateFixedFestivals(from=2025, to=2050){
+    const arr = [];
+    for(let y=from; y<=to; y++){
+      FIXED_FESTS.forEach(([nm, md])=>{
+        arr.push({id:crypto.randomUUID(), name:nm, date:`${y}-${md}`});
+      });
+    }
+    return arr;
+  }
+
+  let festivals = store.get("festivals", null);
+  if(!festivals || !Array.isArray(festivals) || festivals.length===0){
+    festivals = [...generateFixedFestivals(2025,2050)];
+    VARIABLE_2025.forEach(f=> festivals.push({id:crypto.randomUUID(), ...f}));
+    festivals.sort((a,b)=> a.date.localeCompare(b.date));
+    store.set("festivals", festivals);
+  }
+
+  let promotions = store.get("promotions", [
+    {id:crypto.randomUUID(), title:"New Year Kickoff", start:"2025-01-01", end:"2025-01-07", off:25, code:"NY25", desc:"Sitewide discount."},
+    {id:crypto.randomUUID(), title:"Holi Splash Sale", start:"2025-03-10", end:"2025-03-15", off:30, code:"HOLI30", desc:"Colors of savings on all orders."},
+    {id:crypto.randomUUID(), title:"Diwali Mega Deals", start:"2025-10-10", end:"2025-10-22", off:50, code:"DIWALI50", desc:"Biggest festival offers!"}
+  ]);
+
+  let view = new Date();            
+  let selectedISO = todayISO();     
+
+  function monthLabel(d){ return d.toLocaleString("en-US",{month:"long", year:"numeric"}); }
+  function monthCells(d){
+    const y=d.getFullYear(), m=d.getMonth();
+    const first = new Date(y,m,1);
+    const start = first.getDay(); // 0..6
+    const total = new Date(y,m+1,0).getDate();
+    const arr=[];
+    for(let i=0;i<start;i++) arr.push(null);
+    for(let day=1; day<=total; day++) arr.push(new Date(y,m,day));
+    while(arr.length%7!==0) arr.push(null);
+    return arr;
+  }
+  function renderCalendar(){
+    $("#monthYar").textContent = monthLabel(view);
+    const grid = $("#calgrid"); grid.innerHTML = "";
+    const cells = monthCells(view);
+    const tISO = todayISO();
+
+    cells.forEach(dt=>{
+      const div = document.createElement("div");
+      div.className = "cell";
+      if(!dt){ div.style.visibility="hidden"; grid.appendChild(div); return; }
+      const iso = dt.toISOString().slice(0,10);
+      const num = document.createElement("div");
+      num.className = "d"; num.textContent = dt.getDate();
+      div.appendChild(num);
+
+      const dayFest = festivals.filter(f=>f.date===iso);
+      if(dayFest.length>0){
+        const dot = document.createElement("div"); dot.className="dot"; div.appendChild(dot);
+        dayFest.slice(0,3).forEach(f=>{
+          const b = document.createElement("div"); b.className="tag"; b.textContent=f.name;
+          div.appendChild(b);
+        });
+        if(dayFest.length>3){
+          const more = document.createElement("div"); more.className="tag"; more.textContent=`+${dayFest.length-3} more`;
+          div.appendChild(more);
+        }
+      }
+      if(iso===tISO) div.classList.add("today");
+      div.addEventListener("click", ()=> selectDate(iso));
+      grid.appendChild(div);
+    });
+  }
+  function selectDate(iso){
+    selectedISO = iso;
+    $("#seldate").textContent = "Selected: " + new Date(iso).toDateString();
+    renderSelectedList();
+  }
+  function renderSelectedList(){
+    const ul = $("#selfestivals"); ul.innerHTML="";
+    if(!selectedISO){ ul.innerHTML = "<li><span class='muted'>No date selected.</span></li>"; return; }
+    const list = festivals.filter(f=>f.date===selectedISO).sort((a,b)=> a.name.localeCompare(b.name));
+    if(list.length===0){ ul.innerHTML = "<li>No festivals on this date.</li>"; return; }
+    list.forEach(f=>{
+      const li = document.createElement("li");
+      li.innerHTML = `<div><strong>${f.name}</strong> <span class="muted">(${f.date})</span></div>`;
+      const actions = document.createElement("div"); actions.className="actions";
+      const e = document.createElement("button"); e.className="editBtn"; e.textContent="Edit";
+      const d = document.createElement("button"); d.className="delBtn"; d.textContent="Delete";
+      e.addEventListener("click", ()=>{
+        $("#festname").value = f.name;
+        $("#festdate").value = f.date;
+        $("#festname").focus();
+        $("#addFestForm").dataset.editing = f.id;
+      });
+      d.addEventListener("click", ()=>{
+        if(confirm(`Delete festival "${f.name}"?`)){
+          festivals = festivals.filter(x=>x.id!==f.id);
+          store.set("festivals", festivals);
+          renderCalendar();
+          renderSelectedList();
+          refreshDashboard();
+        }
+      });
+      actions.appendChild(e); actions.appendChild(d);
+      li.appendChild(actions);
+      ul.appendChild(li);
+    });
+  }
+
+  $("#addFestForm").addEventListener("submit",(e)=>{
+    e.preventDefault();
+    const name = $("#festname").value.trim();
+    const date = $("#festdate").value;
+    if(!name || !date){ alert("Please enter festival name & date."); return; }
+
+    const editingId = $("#addFestForm").dataset.editing;
+    if(editingId){
+      const i = festivals.findIndex(x=>x.id===editingId);
+      if(i>=0){ festivals[i].name = name; festivals[i].date = date; }
+      $("#addFestForm").dataset.editing = "";
+    }else{
+      festivals.push({id:crypto.randomUUID(), name, date});
+    }
+    festivals.sort((a,b)=> a.date.localeCompare(b.date));
+    store.set("festivals", festivals);
+    renderCalendar();
+    if(selectedISO===date || !selectedISO) selectDate(date);
+    $("#festname").value=""; $("#festdate").value="";
+    refreshDashboard();
+  });
+
+  $("#caPrev").addEventListener("click", ()=>{ view.setMonth(view.getMonth()-1); renderCalendar(); });
+  $("#calnext").addEventListener("click", ()=>{ view.setMonth(view.getMonth()+1); renderCalendar(); });
+
+  $("#festivalSearch").addEventListener("input", ()=>{
+    const q = $("#festivalSearch").value.toLowerCase().trim();
+    const match = festivals.find(f=> (f.name.toLowerCase().includes(q) || f.date.includes(q)));
+    if(match){
+      const d = new Date(match.date);
+      view = new Date(d.getFullYear(), d.getMonth(), 1);
+      renderCalendar();
+      selectDate(match.date);
+    }else if(q===""){
+      renderCalendar();
+      renderSelectedList();
+    }
+  });
+
+  function statusOf(p){
+    const now = new Date().setHours(0,0,0,0);
+    const s = new Date(p.start).setHours(0,0,0,0);
+    const e = new Date(p.end).setHours(23,59,59,999);
+    if(now < s) return "upcoming";
+    if(now > e) return "expired";
+    return "live";
+  }
+  function humanDates(p){
+    const fmt = (d)=> d.toLocaleDateString(undefined,{day:"2-digit",month:"short",year:"numeric"});
+    return `${fmt(new Date(p.start))} – ${fmt(new Date(p.end))}`;
+  }
+  function renderPromotions(){
+    const q = $("#promoSearch").value.toLowerCase().trim();
+    const wrap = $("#promoList"); wrap.innerHTML="";
+    const rows = promotions.slice().sort((a,b)=> new Date(a.start)-new Date(b.start))
+      .filter(p => !q || p.title.toLowerCase().includes(q) || p.code.toLowerCase().includes(q));
+
+    rows.forEach(p=>{
+      const st = statusOf(p);
+      const card = document.createElement("div"); card.className = `pCard ${st}`;
+      card.innerHTML = `
+        <div class="pHead">
+          <div class="badge">${st.toUpperCase()}</div>
+          <div class="pOff">${Number(p.off||0)}% OFF</div>
+        </div>
+        <h3>${p.title}</h3>
+        <div class="pDates">${humanDates(p)}</div>
+        <div class="pCode">Coupon: <strong>${p.code}</strong> <button class="copy">Copy</button></div>
+        <div class="pDesc">${p.desc ? p.desc : ""}</div>
+        <div class="pActions">
+          <button class="editBtn">Edit</button>
+          <button class="delBtn">Delete</button>
+        </div>
+      `;
+      card.querySelector(".copy").addEventListener("click", ()=>{
+        navigator.clipboard.writeText(p.code); alert("Copied: "+p.code);
+      });
+      card.querySelector(".editBtn").addEventListener("click", ()=>{
+        $("#promoTitle").value = p.title;
+        $("#promoStart").value = p.start;
+        $("#promoEnd").value = p.end;
+        $("#promoOff").value = p.off;
+        $("#promoCode").value = p.code;
+        $("#promoDesc").value = p.desc || "";
+        $("#promoForm").dataset.editing = p.id;
+        window.scrollTo({top:0, behavior:"smooth"});
+      });
+      card.querySelector(".delBtn").addEventListener("click", ()=>{
+        if(confirm(`Delete promotion "${p.title}"?`)){
+          promotions = promotions.filter(x=>x.id!==p.id);
+          store.set("promotions", promotions);
+          renderPromotions();
+          refreshDashboard();
+        }
+      });
+
+      wrap.appendChild(card);
+    });
+  }
+
+  $("#promoForm").addEventListener("submit",(e)=>{
+    e.preventDefault();
+    const data = {
+      id: $("#promoForm").dataset.editing || crypto.randomUUID(),
+      title: $("#promoTitle").value.trim(),
+      start: $("#promoStart").value,
+      end: $("#promoEnd").value,
+      off: Math.max(0, Math.min(95, parseInt($("#promoOff").value||"0",10))),
+      code: ($("#promoCode").value.trim() || genCode()),
+      desc: $("#promoDesc").value.trim()
+    };
+    if(!data.title || !data.start || !data.end){ alert("Please fill title/start/end."); return; }
+    if(new Date(data.end) < new Date(data.start)){ alert("End must be after start."); return; }
+
+    const idx = promotions.findIndex(x=>x.id===data.id);
+    if(idx>=0) promotions[idx] = data;
+    else promotions.push(data);
+
+    $("#promoForm").reset();
+    $("#promoForm").dataset.editing="";
+    store.set("promotions", promotions);
+    renderPromotions();
+    refreshDashboard();
+  });
+
+  $("#clearPromo").addEventListener("click", ()=>{
+    $("#promoForm").reset();
+    $("#promoForm").dataset.editing="";
+  });
+
+  function genCode(len=8){
+    const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let out=""; for(let i=0;i<len;i++) out+=chars[Math.floor(Math.random()*chars.length)];
+    return out;
+  }
+  $("#coupon").addEventListener("click", ()=> $("#promoCode").value = genCode());
+
+  $("#promoSearch").addEventListener("input", renderPromotions);
+
+  $("#contactForm").addEventListener("submit",(e)=>{
+    e.preventDefault();
+    const name = $("#cname").value.trim();
+    const email = $("#cemail").value.trim();
+    const sub = $("#csubject").value.trim();
+    const msg = $("#cmessage").value.trim();
+    const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if(!name || !okEmail || !sub || msg.length<5){
+      $("#contactMsg").textContent = "⚠️ Please fill all fields correctly.";
+      return;
+    }
+    $("#contactMsg").textContent = "✅ Thanks! Your message has been recorded (demo).";
+    $("#contactForm").reset();
+  });
+
+  function refreshDashboard(){
+    $("#dashPromoCount").textContent = promotions.length;
+    $("#dashFestCount").textContent = festivals.length;
+    const dl = $("#dashPromoList"); dl.innerHTML="";
+    promotions.slice().sort((a,b)=> new Date(b.start)-new Date(a.start)).slice(0,5).forEach(p=>{
+      const li = document.createElement("div");
+      li.className="list-item";
+      li.innerHTML = `<div class="list" style="margin:0"><li><strong>${p.title}</strong> <span class="muted">(${p.code})</span> — ${humanDates(p)}</li></div>`;
+      dl.appendChild(li);
+    });
+  }
+  $("#refreshDash").addEventListener("click", refreshDashboard);
+
+  function init(){
+    setUser(localStorage.getItem("userName") || "Guest");
+
+    showAd(0); startAds();
+
+    renderCalendar();
+    selectDate(selectedISO);
+
+    renderPromotions();
+
+    refreshDashboard();
+
+    syncAuthUI();
+  }
+  init();
+</script>
+</body>
+</html>
