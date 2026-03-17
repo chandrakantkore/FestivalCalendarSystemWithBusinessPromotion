@@ -1,0 +1,144 @@
+ *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+body{
+    background:#f4f6fb;
+    color:#111;
+}
+ nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 30px;
+    background:#1f2937;  
+    color:white;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    border-radius:0 0 12px 12px;
+}
+nav .logo{
+    font-size:22px;
+    font-weight:600;
+    cursor:pointer;
+}
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:15px;
+}
+nav li{
+    cursor:pointer;
+    padding:8px 16px;
+    border-radius:20px;
+    transition:0.3s;
+}
+nav li:hover{
+    background:rgba(255,255,255,0.15);
+}
+ .container{
+    max-width:1200px;
+    margin:auto;
+    padding:30px;
+}
+ .card{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    margin-bottom:25px;
+    transition:0.3s;
+    border-left:5px solid #3b82f6;  
+}
+.card:hover{
+    transform:translateY(-5px);
+}
+ form{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+input, select, textarea{
+    padding:10px;
+    border-radius:6px;
+    border:1px solid #ddd;
+    font-size:14px;
+}
+input:focus, select:focus, textarea:focus{
+    outline:none;
+    border-color:#3b82f6;
+}
+button{
+    background:#3b82f6;
+    color:white;
+    border:none;
+    padding:10px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:500;
+    transition:0.3s;
+}
+button:hover{
+    background:#2563eb;
+}
+
+ .tabs{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+.tab{
+    padding:10px 20px;
+    background:#e2e8f0;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:500;
+    transition:0.3s;
+}
+.tab.active{
+    background:#3b82f6;
+    color:white;
+}
+ .tab-content{
+    display:none;
+}
+.tab-content.active{
+    display:block;
+}
+ table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+table th{
+    background:#3b82f6;
+    color:white;
+    padding:12px;
+    text-align:left;
+}
+table td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+}
+table tr:hover{
+    background:#f9fafc;
+}
+ .logout-btn{
+    background:#ef4444;
+    margin-top:10px;
+}
+.logout-btn:hover{
+    background:#dc2626;
+}
+ @media(max-width:768px){
+    nav{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .stats, .tabs{
+        flex-direction:column;
+    }
+}

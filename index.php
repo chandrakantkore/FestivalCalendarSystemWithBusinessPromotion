@@ -1,0 +1,212 @@
+<?php include('db.php'); ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fest Calendar – Celebrate Smartly 🎉</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="blob one"></div>
+<div class="blob two"></div>
+
+<nav>
+  <div class="nav-wrap">
+    <div class="logo" onclick="location='index.php'">FestCal</div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <ul id="nav-links">
+      <li onclick="location='index.php'">Home</li>
+      <li onclick="location='festival.php'">festCal</li>
+      <li onclick="location='business.php'">Business</li>
+      <li onclick="location='user.php'">User</li>
+      <li onclick="location='promotions.php'">Promotions</li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div>
+    <h1>Celebrate <span>Every Festival</span><br>Like Never Before</h1>
+    <p>Festivals • Promotions • Countdown • Smart Planning</p>
+    <button onclick="location='festival.php'">Explore Festivals</button>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Powerful Features</h2>
+  <div class="grid">
+    <div class="card"><h3>🎉 Favorite Festivals</h3><p>Never Miss Important Celebrations.</p></div>
+    <div class="card"><h3>📊 Promotions</h3><p>Best Festival Deals at One Place.</p></div>
+    <div class="card"><h3>⏳ Countdown</h3><p>Live Countdown For Upcoming Festivals.</p></div>
+    <div class="card"><h3>🔔 Alerts</h3><p>Smart Reminders and Notifications.</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>FestCal in Numbers</h2>
+  <div class="stats">
+    <div class="stat"><h3 class="counter">100+</h3><p>Festivals</p></div>
+    <div class="stat"><h3 class="counter">300+</h3><p>Businesses</p></div>
+    <div class="stat"><h3 class="counter">100+</h3><p>Users</p></div>
+    <div class="stat"><h3 class="counter">1000+</h3><p>Views</p></div>
+  </div>
+</section>
+
+<section class="section countdowns">
+  <h2>Upcoming Festivals</h2>
+  <div class="grid" id="countdown-grid">
+    <?php
+    $upcoming = $conn->query("SELECT name, date FROM festivals ORDER BY date ASC LIMIT 4");
+    while($f = $upcoming->fetch_assoc()){
+        echo "<div class='countdown-card'>
+                <h3>{$f['name']}</h3>
+                <p id='timer-{$f['date']}'></p>
+              </div>";
+    }
+    ?>
+  </div>
+</section>
+
+<section class="section promotions">
+  <h2>Top Promotions</h2>
+  <div class="grid">
+    <?php
+    $promos = $conn->query("SELECT p.title, p.description, f.name AS festival FROM promotions p JOIN festivals f ON p.festival_id=f.id ORDER BY f.date ASC LIMIT 4");
+    while($p = $promos->fetch_assoc()){
+      echo "<div class='card'>
+              <h3>{$p['title']}</h3>
+              <p><span>Festival:</span> {$p['festival']}</p>
+              <p>{$p['description']}</p>
+            </div>";
+    }
+    ?>
+  </div>
+</section>
+
+<section class="section testimonials">
+  <h2>What Our Users Say</h2>
+  <div class="grid">
+    <div class="card"><p>“FestCal keeps me updated for every festival, never missed one!”</p><h4>– Priya</h4></div>
+    <div class="card"><p>“Promotions are amazing, saved so much on Diwali deals.”</p><h4>– Rohit</h4></div>
+        <div class="card"><p>“FestCal keeps me updated for every festival, never missed one!”</p><h4>– Shivam</h4></div>
+    <div class="card"><p>“Overall a nice and informative project!”</p><h4>– Rushi</h4></div>
+    <div class="card"><p>“Would be great if it had reminder features!”</p><h4>– Anurag</h4></div>
+    <div class="card"><p>“Works well, but needs some improvement on mobile”</p><h4>– Pavan</h4></div>
+    <div class="card"><p>“Good concept, but the UI can be more modern.”</p><h4>– Oma</h4></div>
+    <div class="card"><p>“Very useful website 👍 I can easily check festivals.”</p><h4>– Aditya</h4></div>
+
+  </div>
+</section>
+
+<section class="section newsletter">
+  <h2>Get Festival Alerts Directly</h2>
+  <form method="POST" action="user.php">
+    <input type="email" name="email" placeholder="Your Email" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</section>
+
+<footer class="footer">
+
+<div class="footer-container">
+
+<div class="footer-col">
+<h3>FestCal 🎉</h3>
+<p>Your smart festival planner. Discover festivals, promotions and never miss celebrations again.</p>
+</div>
+
+<div class="footer-col">
+<h4>Quick Links</h4>
+<ul>
+<li onclick="location='index.php'">Home</li>
+<li onclick="location='festival.php'">FestCal</li>
+<li onclick="location='business.php'">Business</li>
+<li onclick="location='promotions.php'">Promotions</li>
+</ul>
+</div>
+
+<div class="footer-col">
+<h4>Features</h4>
+<ul>
+<li>Festival Countdown</li>
+<li>Favorite Festivals</li>
+<li>Promotions</li>
+<li>Smart Alerts</li>
+</ul>
+</div>
+
+<div class="footer-col">
+<h4>Follow Us</h4>
+
+<div class="socials">
+<span></span>
+<span>📸</span>
+<span>🐦</span>
+<span>▶</span>
+</div>
+
+<p class="contact"><a href="https://www.instagram.com/sanketkore_21?igsh=MXRxcXpwNnc5MXY1Zg==">Meet Developer</a></p>
+
+</div>
+
+</div>
+
+<div class="footer-bottom">
+© <?= date('Y') ?> @FestCal • All Rights Reserved
+</div>
+
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById('nav-links').classList.toggle('show');
+}
+
+ const festivals = [
+<?php
+$upcoming = $conn->query("SELECT name, date FROM festivals ORDER BY date ASC LIMIT 4");
+while($f = $upcoming->fetch_assoc()){
+    echo "{name:'{$f['name']}', date:'{$f['date']}'},";
+}
+?>
+];
+
+festivals.forEach(f=>{
+  const timer = document.getElementById('timer-'+f.date);
+  function update(){
+    const now = new Date().getTime();
+    const festDate = new Date(f.date).getTime();
+    const diff = festDate - now;
+    if(diff>0){
+      const d=Math.floor(diff/(1000*60*60*24));
+      const h=Math.floor(diff/(1000*60*60)%24);
+      const m=Math.floor(diff/(1000*60)%60);
+      const s=Math.floor(diff/1000%60);
+      timer.innerText=`${d}d ${h}h ${m}m ${s}s`;
+    }else{
+      timer.innerText="Today!";
+    }
+  }
+  setInterval(update,1000);
+  update();
+});
+
+ document.querySelectorAll('.counter').forEach(el=>{
+  let count = 0;
+  const target = parseInt(el.innerText);
+  const step = Math.ceil(target / 100);
+  const interval = setInterval(()=>{
+    if(count < target){ count += step; el.innerText = count>target?target:count; }
+    else clearInterval(interval);
+  },20);
+});
+</script>
+
+</body>
+</html>

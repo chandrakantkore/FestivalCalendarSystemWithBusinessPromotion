@@ -1,0 +1,146 @@
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+body{
+    background:#f4f6fb;
+    color:#111;
+}
+ nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 30px;
+    background:#1f2937;
+    color:white;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    border-radius:0 0 12px 12px;
+}
+nav .logo{
+    font-size:22px;
+    font-weight:600;
+    cursor:pointer;
+}
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:15px;
+}
+nav ul li{
+    cursor:pointer;
+    padding:8px 16px;
+    border-radius:20px;
+    transition:0.3s;
+}
+nav ul li:hover{
+    background:rgba(255,255,255,0.15);
+}
+ .filter-container{
+    max-width:1200px;
+    margin:20px auto;
+    padding:0 30px;
+}
+.filter-container form{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+.filter-container select,
+.filter-container input{
+    padding:10px;
+    border-radius:6px;
+    border:1px solid #ddd;
+    font-size:14px;
+}
+.filter-container select:focus,
+.filter-container input:focus{
+    outline:none;
+    border-color:#3b82f6;
+}
+.filter-container button{
+    background:#3b82f6;
+    color:white;
+    padding:10px 16px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    transition:0.3s;
+}
+.filter-container button:hover{
+    background:#2563eb;
+}
+ .promo-cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+    max-width:1200px;
+    margin:20px auto;
+    padding:0 30px;
+}
+.promo-card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    position:relative;
+    transition:0.3s;
+}
+.promo-card:hover{
+    transform:translateY(-5px);
+}
+.promo-card h3{
+    margin-bottom:10px;
+    color:#1f2937;
+}
+.promo-card p{
+    font-size:14px;
+    margin:5px 0;
+}
+.promo-card span{
+    font-weight:600;
+}
+ .festival-badge{
+    position:absolute;
+    top:15px;
+    right:15px;
+    padding:5px 10px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:600;
+    color:white;
+}
+.badge-upcoming{
+    background:#3b82f6;
+}
+.badge-active{
+    background:#16a34a;
+}
+ footer{
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+    color:#555;
+    font-size:14px;
+    background:white;
+    border-top:1px solid #eee;
+    max-width:1200px;
+    margin-left:auto;
+    margin-right:auto;
+}
+ @media(max-width:768px){
+    nav{
+        flex-direction:column;
+        gap:10px;
+    }
+    .promo-cards{
+        grid-template-columns:1fr;
+        padding:0 15px;
+    }
+    .filter-container form{
+        flex-direction:column;
+        gap:10px;
+    }
+}
